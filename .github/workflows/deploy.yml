@@ -1,10 +1,10 @@
-name: Java CI with Gradle
+name: Java Ci With Gradle
 
 on:
   push:
-    branches: [ "master" ] # 마스터 브랜치에 PUSH가 되면 해당 WORKFILE이 동작합니다.
+    branches: [ "master" ]
   pull_request:
-    branches: [ "master" ] # 마스터 브랜치에 PR이 올라가면 해당 WORKFILE이 동작합니다.
+    branches: [ "master" ]
 
 permissions: write-all
 
@@ -14,20 +14,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3  # 현재 repository를 가져옴
+      - uses: actions/checkout@v3
+
       - name: Set up JDK 17
-        uses: actions/setup-java@v3 #우분투 내에 자바 설치
+        uses: actions/setup-java@v3
         with:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Add permission # 추가된 부분
-        run: chmod +x gradlew  # gradle 권한을 열어줌
+      - name: Add permission
+        run: chmod +x gradlew
 
-      - name: Build with Gradle  # 실제 gradle
-        uses: gradle/gradle-build-action@bd5760595778326ba7f1441bcf7e88b49de61a25 # v2.6.0
+      - name: Build with Gradle
+        uses: gradle/gradle-build-action@bd5760595778326ba7f1441bcf7e88b49de61a25
         with:
-          arguments: build -Pprofile=dev # 추가된 부분
+          arguments: build -Pprofile=dev
 
       - name: 테스트 결과 등록 #추가된 부분
         uses: EnricoMi/publish-unit-test-result-action@v2
